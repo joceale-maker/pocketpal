@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" id="tcm" content="#f48fb1">
+<title>PocketPal</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;max-width:430px;margin:0 auto;overflow-x:hidden;transition:background .3s,color .3s;}
+body.theme-pink{--bg:#fff0f5;--sf:#fff;--sf2:#fff8fb;--bd:rgba(244,143,177,.22);--pr:#f48fb1;--prd:#c2185b;--prl:#ffd6e7;--tx:#880e4f;--tx2:#c2185b;--tx3:#f48fb1;--ac:#e91e8c;--nav:linear-gradient(135deg,#f48fb1,#e91e8c);--prg:#f48fb1;--ibg:#ffeef5;--bbg:#ffd6e7;--btx:#880e4f;--ch1:#f48fb1;--inc:rgba(255,255,255,.15);--inctx:#fff;--inctx2:rgba(255,255,255,.8);}
+body.theme-lavender{--bg:#f5f0ff;--sf:#fff;--sf2:#f9f7fe;--bd:rgba(179,157,219,.22);--pr:#b39ddb;--prd:#512da8;--prl:#e8d8ff;--tx:#311b92;--tx2:#512da8;--tx3:#7e57c2;--ac:#7e57c2;--nav:linear-gradient(135deg,#b39ddb,#7e57c2);--prg:#b39ddb;--ibg:#f0ebff;--bbg:#e8d8ff;--btx:#311b92;--ch1:#b39ddb;--inc:rgba(255,255,255,.15);--inctx:#fff;--inctx2:rgba(255,255,255,.8);}
+body.theme-peach{--bg:#fff8f0;--sf:#fff;--sf2:#fffaf5;--bd:rgba(255,183,77,.22);--pr:#ffb74d;--prd:#e65100;--prl:#ffe8cc;--tx:#bf360c;--tx2:#e65100;--tx3:#ff8c00;--ac:#ff8c00;--nav:linear-gradient(135deg,#ffcc99,#ff8c00);--prg:#ffb74d;--ibg:#fff3e0;--bbg:#ffe8cc;--btx:#bf360c;--ch1:#ffb74d;--inc:rgba(255,255,255,.15);--inctx:#fff;--inctx2:rgba(255,255,255,.8);}
+body.theme-sage{--bg:#f0faf0;--sf:#fff;--sf2:#f6fbf6;--bd:rgba(129,199,132,.22);--pr:#81c784;--prd:#2e7d32;--prl:#d4edcc;--tx:#1b5e20;--tx2:#2e7d32;--tx3:#388e3c;--ac:#388e3c;--nav:linear-gradient(135deg,#a8d899,#388e3c);--prg:#81c784;--ibg:#e8f5e9;--bbg:#d4edcc;--btx:#1b5e20;--ch1:#81c784;--inc:rgba(255,255,255,.15);--inctx:#fff;--inctx2:rgba(255,255,255,.8);}
+body.theme-berry{--bg:#1a0015;--sf:#2e0025;--sf2:#3d0033;--bd:rgba(156,39,113,.3);--pr:#9c2771;--prd:#f48fb1;--prl:#6d1b4e;--tx:#fce4f0;--tx2:#f48fb1;--tx3:#ce93bf;--ac:#f48fb1;--nav:linear-gradient(135deg,#6d1b4e,#9c2771);--prg:#9c2771;--ibg:#3d0033;--bbg:#4a0035;--btx:#f48fb1;--ch1:#9c2771;--inc:rgba(255,255,255,.12);--inctx:#fce4f0;--inctx2:rgba(252,228,240,.7);}
+body.theme-midnight{--bg:#0d1117;--sf:#161b22;--sf2:#21262d;--bd:rgba(56,139,253,.18);--pr:#388bfd;--prd:#79c0ff;--prl:#1f3a5f;--tx:#e6edf3;--tx2:#79c0ff;--tx3:#58a6ff;--ac:#58a6ff;--nav:linear-gradient(135deg,#0d1117,#1f3a5f);--prg:#388bfd;--ibg:#1c2d3f;--bbg:#1c2d3f;--btx:#79c0ff;--ch1:#388bfd;--inc:rgba(255,255,255,.08);--inctx:#e6edf3;--inctx2:rgba(230,237,243,.7);}
+body.theme-forest{--bg:#1a2015;--sf:#232b1c;--sf2:#2c3623;--bd:rgba(134,179,80,.2);--pr:#86b350;--prd:#d4e8a0;--prl:#3a4f28;--tx:#e8f0d8;--tx2:#b8d878;--tx3:#90b860;--ac:#b8d878;--nav:linear-gradient(135deg,#2c3623,#3a4f28);--prg:#86b350;--ibg:#2c3623;--bbg:#3a4f28;--btx:#d4e8a0;--ch1:#86b350;--inc:rgba(255,255,255,.08);--inctx:#e8f0d8;--inctx2:rgba(232,240,216,.7);}
+body.theme-slate{--bg:#1c1f26;--sf:#252831;--sf2:#2e3140;--bd:rgba(255,111,60,.2);--pr:#ff6f3c;--prd:#ffab8a;--prl:#3d2218;--tx:#f0f0f0;--tx2:#ffab8a;--tx3:#ff8c60;--ac:#ff6f3c;--nav:linear-gradient(135deg,#252831,#3d2218);--prg:#ff6f3c;--ibg:#2e2018;--bbg:#3d2218;--btx:#ffab8a;--ch1:#ff6f3c;--inc:rgba(255,255,255,.08);--inctx:#f0f0f0;--inctx2:rgba(240,240,240,.7);}
+body.theme-navy{--bg:#0a0e1a;--sf:#101624;--sf2:#181f30;--bd:rgba(212,175,55,.2);--pr:#d4af37;--prd:#f5d76e;--prl:#2a2000;--tx:#f0e8c8;--tx2:#f5d76e;--tx3:#d4af37;--ac:#d4af37;--nav:linear-gradient(135deg,#0a0e1a,#1a1400);--prg:#d4af37;--ibg:#1a1600;--bbg:#2a2000;--btx:#f5d76e;--ch1:#d4af37;--inc:rgba(255,255,255,.08);--inctx:#f0e8c8;--inctx2:rgba(240,232,200,.7);}
+body.theme-mono{--bg:#f8f8f8;--sf:#fff;--sf2:#f2f2f2;--bd:rgba(0,0,0,.1);--pr:#222;--prd:#000;--prl:#e0e0e0;--tx:#111;--tx2:#333;--tx3:#777;--ac:#000;--nav:linear-gradient(135deg,#333,#000);--prg:#222;--ibg:#f0f0f0;--bbg:#e8e8e8;--btx:#111;--ch1:#333;--inc:rgba(255,255,255,.12);--inctx:#fff;--inctx2:rgba(255,255,255,.75);}
+
+.nav{background:var(--nav);padding:44px 20px 16px;position:relative;overflow:hidden;}
+.nav::before{content:'';position:absolute;top:-40px;right:-40px;width:130px;height:130px;background:rgba(255,255,255,.07);border-radius:50%;}
+.nav::after{content:'';position:absolute;bottom:-25px;left:20px;width:90px;height:90px;background:rgba(255,255,255,.05);border-radius:50%;}
+.nav-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.app-title{font-family:'DM Serif Display',serif;font-size:24px;color:#fff;letter-spacing:-.5px;}
+.month-row{display:flex;gap:8px;margin-bottom:10px;}
+.msel{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;-webkit-appearance:none;appearance:none;}
+.msel.month{flex:1;text-align:center;}
+.msel.year{width:72px;text-align:center;}
+.msel option{background:#333;color:#fff;}
+.pocket-toggle{display:flex;background:rgba(0,0,0,.18);border-radius:10px;padding:3px;margin-bottom:12px;}
+.pbtn{flex:1;border:none;border-radius:8px;padding:7px 4px;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .2s;color:rgba(255,255,255,.6);background:transparent;}
+.pbtn.active{background:#fff;color:var(--prd);}
+
+.inc-block{background:var(--inc);border-radius:12px;padding:10px 12px;}
+.inc-block-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.inc-block-label{font-size:10px;font-weight:600;color:var(--inctx2);text-transform:uppercase;letter-spacing:.06em;}
+.inc-block-addbtn{background:rgba(255,255,255,.22);color:var(--inctx);border:none;border-radius:12px;padding:3px 10px;font-size:10px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;}
+.inc-block-total{font-family:'DM Serif Display',serif;font-size:24px;color:var(--inctx);margin-bottom:6px;}
+.inc-block-entries{display:flex;flex-direction:column;gap:3px;}
+.inc-block-entry{display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:rgba(255,255,255,.12);border-radius:7px;font-size:11px;}
+.inc-block-entry-lbl{color:var(--inctx2);font-weight:500;}
+.inc-block-entry-amt{color:var(--inctx);font-weight:600;}
+.inc-block-empty{font-size:11px;color:var(--inctx2);font-style:italic;}
+.inc-del{background:none;border:none;cursor:pointer;color:var(--inctx2);font-size:12px;padding:2px 4px;opacity:.6;}
+
+.sum-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 16px;background:var(--sf2);border-bottom:1px solid var(--bd);}
+.stat{text-align:center;}
+.slbl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;font-weight:500;}
+.sval{font-size:16px;font-weight:600;color:var(--tx);}
+.sval.red{color:#e53935;}.sval.grn{color:#2e7d32;}
+.prog-wrap{padding:8px 16px 10px;background:var(--sf2);border-bottom:1px solid var(--bd);}
+.prog-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--tx3);margin-bottom:4px;}
+.prog-track{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;}
+.prog-bar{height:100%;background:var(--prg);border-radius:3px;transition:width .4s ease;}
+
+.tabs{display:flex;background:var(--sf);border-bottom:1px solid var(--bd);position:sticky;top:0;z-index:10;overflow-x:auto;}
+.tab{flex:1;text-align:center;padding:10px 2px;font-size:9.5px;font-weight:600;color:var(--tx3);border-bottom:2.5px solid transparent;cursor:pointer;transition:all .2s;text-transform:uppercase;white-space:nowrap;letter-spacing:.02em;}
+.tab.active{color:var(--prd);border-bottom-color:var(--prd);}
+.tab-pane{display:none;padding-bottom:90px;}
+.tab-pane.active{display:block;}
+
+.sec-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 8px;}
+.sec-ttl{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;}
+.add-btn{background:var(--prl);color:var(--prd);border:none;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;}
+
+.info-pill{margin:0 16px 8px;background:var(--ibg);border-radius:10px;padding:8px 12px;font-size:11px;color:var(--tx3);line-height:1.5;}
+
+.exp-list{padding:0 16px;}
+.exp-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);}
+.exp-item:last-child{border-bottom:none;}
+.exp-ic{width:36px;height:36px;border-radius:10px;background:var(--ibg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.exp-ic.sav{background:#E1F5EE;}
+.exp-meta{flex:1;min-width:0;}
+.exp-nm{font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.exp-nm.sav{color:#085041;}
+.exp-sb{font-size:11px;color:var(--tx3);margin-top:1px;}
+.exp-sb.sav{color:#0F6E56;}
+.exp-nt{font-size:10px;color:var(--tx3);font-style:italic;margin-top:1px;}
+.exp-rgt{text-align:right;flex-shrink:0;}
+.exp-am{font-size:14px;font-weight:600;color:var(--tx);}
+.exp-am.sav{color:#085041;}
+.exp-bg{font-size:10px;background:var(--bbg);color:var(--btx);padding:2px 7px;border-radius:10px;margin-top:3px;display:inline-block;font-weight:500;}
+.exp-bg.auto{background:var(--bd);color:var(--tx3);}
+.exp-bg.sav{background:#E1F5EE;color:#085041;}
+.del-btn{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:13px;padding:4px;opacity:.45;}
+.del-btn:hover{opacity:1;}
+.sav-mini-bar{height:4px;background:rgba(0,0,0,.08);border-radius:2px;overflow:hidden;margin-top:4px;}
+.sav-mini-fill{height:100%;background:#1D9E75;border-radius:2px;}
+.empty{text-align:center;padding:28px 20px;color:var(--tx3);}
+.empty-icon{font-size:34px;margin-bottom:6px;}
+.empty-text{font-size:13px;line-height:1.5;}
+
+.dash-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px 0;}
+.dc{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;}
+.dc.accent{background:var(--prl);border-color:var(--pr);}
+.dc-lbl{font-size:10px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.dc-val{font-size:20px;font-weight:600;font-family:'DM Serif Display',serif;color:var(--tx);}
+.dc.accent .dc-val{color:var(--prd);}
+.dc-sub{font-size:11px;color:var(--tx3);margin-top:2px;}
+.cat-bk{padding:14px 16px 0;}
+.cat-bk-ttl{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+.cat-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.cat-ico{font-size:16px;width:28px;text-align:center;}
+.cat-inf{flex:1;}
+.cat-nm{font-size:12px;font-weight:500;color:var(--tx);margin-bottom:3px;}
+.cat-tr{height:4px;background:var(--bd);border-radius:2px;overflow:hidden;}
+.cat-fl{height:100%;background:var(--ch1);border-radius:2px;}
+.cat-am{font-size:12px;font-weight:600;color:var(--tx2);min-width:60px;text-align:right;}
+.dash-div{height:1px;background:var(--bd);margin:14px 16px 0;}
+.dash-all-ttl{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.06em;padding:14px 16px 8px;}
+
+.sett-card{background:var(--sf);border:1px solid var(--bd);border-radius:14px;overflow:hidden;}
+.sett-row{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--bd);}
+.sett-row:last-child{border-bottom:none;}
+.sett-row-lbl{font-size:13px;font-weight:500;color:var(--tx);}
+.sett-in{border:1px solid var(--bd);background:var(--sf2);color:var(--tx);border-radius:8px;padding:6px 10px;font-size:13px;font-family:'DM Sans',sans-serif;width:130px;text-align:right;}
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.topt{border:2px solid transparent;border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.topt.active{border-color:var(--ac);}
+.tthumb{height:56px;display:flex;align-items:center;justify-content:center;font-size:22px;}
+.tname{padding:7px;background:var(--sf);font-size:11px;font-weight:600;color:var(--tx2);text-align:center;}
+.grp-lbl{font-size:12px;font-weight:600;color:var(--tx2);margin:14px 0 8px;}
+.hr{height:1px;background:var(--bd);margin:0 16px;}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;align-items:flex-end;justify-content:center;}
+.overlay.open{display:flex;}
+.modal{background:var(--sf);border-radius:20px 20px 0 0;padding:20px 20px 36px;width:100%;max-width:430px;max-height:88vh;overflow-y:auto;animation:sup .28s ease;}
+@keyframes sup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.modal-ttl{font-family:'DM Serif Display',serif;font-size:20px;color:var(--tx);margin-bottom:16px;}
+.mf{margin-bottom:12px;}
+.ml{font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px;}
+.mi{width:100%;border:1px solid var(--bd);background:var(--sf2);color:var(--tx);border-radius:10px;padding:10px 12px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+.mi:focus{border-color:var(--pr);}
+.mi::placeholder{color:var(--tx3);}
+.pr-radio{display:flex;gap:8px;}
+.pr-btn{flex:1;border:1px solid var(--bd);background:var(--sf2);color:var(--tx3);border-radius:10px;padding:10px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;transition:all .15s;}
+.pr-btn.sel{background:var(--prl);border-color:var(--pr);color:var(--prd);}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.cb{background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:8px 4px;text-align:center;font-size:10px;font-weight:600;color:var(--tx2);cursor:pointer;line-height:1.5;}
+.cb.sel{background:var(--prl);border-color:var(--pr);color:var(--prd);}
+.macts{display:flex;gap:8px;margin-top:16px;}
+.btn-cancel{flex:1;background:var(--sf2);border:1px solid var(--bd);border-radius:10px;padding:12px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;color:var(--tx3);cursor:pointer;}
+.btn-save{flex:2;background:var(--pr);border:none;border-radius:10px;padding:12px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;color:#fff;cursor:pointer;}
+
+.fab{position:fixed;bottom:24px;right:20px;background:var(--pr);border:none;border-radius:50%;width:52px;height:52px;font-size:24px;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;z-index:50;transition:transform .15s;}
+.fab:active{transform:scale(.92);}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-80px);background:var(--tx);color:var(--bg);padding:10px 20px;border-radius:20px;font-size:13px;font-weight:600;z-index:300;transition:transform .3s;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body class="theme-pink">
+<div class="toast" id="toast"></div>
+
+<div id="app">
+  <div class="nav">
+    <div class="nav-top">
+      <div class="app-title" id="app-title">PocketPal 🌸</div>
+    </div>
+    <div class="month-row">
+      <select class="msel month" id="msel" onchange="onMonthChange()"></select>
+      <select class="msel year" id="ysel" onchange="onMonthChange()"></select>
+    </div>
+    <div class="pocket-toggle">
+      <button class="pbtn active" id="p1btn" onclick="switchPocket(1)">Pocket 1 · 1st–15th</button>
+      <button class="pbtn" id="p2btn" onclick="switchPocket(2)">Pocket 2 · 16th–30th</button>
+    </div>
+    <div class="inc-block">
+      <div class="inc-block-header">
+        <span class="inc-block-label" id="inc-block-lbl">Income · Pocket 1</span>
+        <button class="inc-block-addbtn" onclick="openIncModal()">+ Add</button>
+      </div>
+      <div class="inc-block-total" id="inc-block-total">₱0</div>
+      <div class="inc-block-entries" id="inc-block-entries">
+        <div class="inc-block-empty">No income logged yet</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sum-strip">
+    <div class="stat"><div class="slbl">Income</div><div class="sval" id="s-inc">₱0</div></div>
+    <div class="stat"><div class="slbl">Spent</div><div class="sval red" id="s-spent">₱0</div></div>
+    <div class="stat"><div class="slbl">Left</div><div class="sval grn" id="s-left">₱0</div></div>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-meta"><span>Budget used</span><span id="pct-lbl">0%</span></div>
+    <div class="prog-track"><div class="prog-bar" id="prog-bar" style="width:0%"></div></div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('dashboard')">Home</div>
+    <div class="tab" onclick="switchTab('recurring')">Recurring</div>
+    <div class="tab" onclick="switchTab('planned')">Planned</div>
+    <div class="tab" onclick="switchTab('extra')">Extra</div>
+    <div class="tab" onclick="switchTab('savings')">Savings</div>
+    <div class="tab" onclick="switchTab('settings')">⚙️</div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="tab-pane active" id="tab-dashboard">
+    <div class="dash-cards">
+      <div class="dc accent"><div class="dc-lbl">Total Spent</div><div class="dc-val" id="d-spent">₱0</div><div class="dc-sub" id="d-spent-sub">0 expenses</div></div>
+      <div class="dc"><div class="dc-lbl">Remaining</div><div class="dc-val" id="d-left">₱0</div><div class="dc-sub" id="d-left-sub">of ₱0 income</div></div>
+      <div class="dc"><div class="dc-lbl">Recurring</div><div class="dc-val" id="d-rec">₱0</div><div class="dc-sub" id="d-rec-sub">0 items</div></div>
+      <div class="dc"><div class="dc-lbl">Planned + Extra</div><div class="dc-val" id="d-plex">₱0</div><div class="dc-sub" id="d-plex-sub">0 items</div></div>
+    </div>
+    <div class="cat-bk">
+      <div class="cat-bk-ttl">Spending by Category</div>
+      <div id="cat-chart"></div>
+    </div>
+    <div class="dash-div"></div>
+    <div class="dash-all-ttl">All Expenses This Pocket</div>
+    <div class="exp-list" id="dash-list"></div>
+  </div>
+
+  <!-- RECURRING -->
+  <div class="tab-pane" id="tab-recurring">
+    <div class="sec-head"><div class="sec-ttl">Recurring Expenses</div><button class="add-btn" onclick="openRecModal()">+ Add</button></div>
+    <div class="info-pill">🔄 Stored once, appears automatically every month in the pocket you assign. Set an end date to stop.</div>
+    <div class="exp-list" id="list-recurring"></div>
+  </div>
+
+  <!-- PLANNED -->
+  <div class="tab-pane" id="tab-planned">
+    <div class="sec-head"><div class="sec-ttl">Planned Expenses</div><button class="add-btn" onclick="openPlanModal()">+ Add</button></div>
+    <div class="info-pill">📅 Pick a due date — day 1–15 routes to Pocket 1, day 16–31 to Pocket 2, for whichever month you're viewing.</div>
+    <div class="exp-list" id="list-planned"></div>
+  </div>
+
+  <!-- EXTRA -->
+  <div class="tab-pane" id="tab-extra">
+    <div class="sec-head"><div class="sec-ttl">Additional Expenses</div><button class="add-btn" onclick="openExpModal()">+ Log</button></div>
+    <div class="exp-list" id="list-extra"></div>
+  </div>
+
+  <!-- SAVINGS -->
+  <div class="tab-pane" id="tab-savings">
+    <div class="sec-head"><div class="sec-ttl">Savings Goals</div><button class="add-btn" onclick="openSavModal()">+ Goal</button></div>
+    <div id="sav-list" style="padding:0 16px;display:flex;flex-direction:column;gap:10px;padding-bottom:8px;"></div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="tab-pane" id="tab-settings">
+    <div class="sec-head"><div class="sec-ttl">Choose Theme</div></div>
+    <div style="padding:0 16px;">
+      <div class="grp-lbl" style="margin-top:0;">✨ For Her</div>
+      <div class="theme-grid" id="tg-her"></div>
+      <div class="grp-lbl">💪 For Him</div>
+      <div class="theme-grid" id="tg-him"></div>
+    </div>
+    <div class="hr" style="margin-top:16px;"></div>
+    <div class="sec-head" style="margin-top:4px;"><div class="sec-ttl">Preferences</div></div>
+    <div style="padding:0 16px 80px;">
+      <div class="sett-card">
+        <div class="sett-row"><div class="sett-row-lbl">Currency Symbol</div><input class="sett-in" id="cur-in" value="₱" maxlength="3" onchange="savePref()"></div>
+        <div class="sett-row"><div class="sett-row-lbl">App Name</div><input class="sett-in" id="anm-in" value="PocketPal 🌸" onchange="savePref()"></div>
+        <div class="sett-row"><div class="sett-row-lbl">Pocket 1 Label</div><input class="sett-in" id="p1l-in" value="1st–15th" onchange="savePref()"></div>
+        <div class="sett-row"><div class="sett-row-lbl">Pocket 2 Label</div><input class="sett-in" id="p2l-in" value="16th–30th" onchange="savePref()"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="fab" id="fab" onclick="fabAction()">+</button>
+
+<!-- INCOME MODAL -->
+<div class="overlay" id="inc-ov">
+  <div class="modal">
+    <div class="modal-ttl">Add Income</div>
+    <div class="mf"><div class="ml">Label</div><input class="mi" id="il" placeholder="e.g. Salary, Freelance…"></div>
+    <div class="mf"><div class="ml">Amount</div><input class="mi" id="ia" type="number" inputmode="decimal" placeholder="0.00"></div>
+    <div class="macts"><button class="btn-cancel" onclick="closeIncModal()">Cancel</button><button class="btn-save" onclick="saveInc()">Save ✨</button></div>
+  </div>
+</div>
+
+<!-- RECURRING MODAL -->
+<div class="overlay" id="rec-ov">
+  <div class="modal">
+    <div class="modal-ttl">Add Recurring Expense</div>
+    <div class="mf"><div class="ml">Name</div><input class="mi" id="rn" placeholder="e.g. Rent, Netflix…"></div>
+    <div class="mf"><div class="ml">Amount</div><input class="mi" id="ra" type="number" inputmode="decimal" placeholder="0.00"></div>
+    <div class="mf">
+      <div class="ml">Assign to Pocket</div>
+      <div class="pr-radio">
+        <button class="pr-btn sel" id="rec-p1" onclick="selRecP(1)">Pocket 1 · 1st–15th</button>
+        <button class="pr-btn" id="rec-p2" onclick="selRecP(2)">Pocket 2 · 16th–30th</button>
+      </div>
+    </div>
+    <div class="mf"><div class="ml">Category</div><div class="cat-grid" id="rec-cg"></div></div>
+    <div class="mf"><div class="ml">Note (optional)</div><input class="mi" id="rno" placeholder="Any memo…"></div>
+    <div class="mf">
+      <div class="ml">End Month (optional — leave blank = forever)</div>
+      <input class="mi" id="rend" type="month">
+    </div>
+    <div class="macts"><button class="btn-cancel" onclick="closeRecModal()">Cancel</button><button class="btn-save" onclick="saveRec()">Save 🔄</button></div>
+  </div>
+</div>
+
+<!-- PLANNED MODAL -->
+<div class="overlay" id="plan-ov">
+  <div class="modal">
+    <div class="modal-ttl">Add Planned Expense</div>
+    <div class="mf"><div class="ml">Name</div><input class="mi" id="pln" placeholder="e.g. Groceries run…"></div>
+    <div class="mf"><div class="ml">Amount</div><input class="mi" id="pla" type="number" inputmode="decimal" placeholder="0.00"></div>
+    <div class="mf">
+      <div class="ml">Due Date</div>
+      <input class="mi" id="pld" type="date">
+      <div style="font-size:11px;color:var(--tx3);margin-top:5px;">Day 1–15 → Pocket 1 &nbsp;·&nbsp; Day 16–31 → Pocket 2</div>
+    </div>
+    <div class="mf"><div class="ml">Category</div><div class="cat-grid" id="plan-cg"></div></div>
+    <div class="mf"><div class="ml">Note (optional)</div><input class="mi" id="plno" placeholder="Any memo…"></div>
+    <div class="macts"><button class="btn-cancel" onclick="closePlanModal()">Cancel</button><button class="btn-save" onclick="savePlan()">Save 📅</button></div>
+  </div>
+</div>
+
+<!-- EXTRA MODAL -->
+<div class="overlay" id="exp-ov">
+  <div class="modal">
+    <div class="modal-ttl">Log Extra Expense</div>
+    <div class="mf"><div class="ml">Name</div><input class="mi" id="en" placeholder="e.g. Coffee, Grab…"></div>
+    <div class="mf"><div class="ml">Amount</div><input class="mi" id="ea" type="number" inputmode="decimal" placeholder="0.00"></div>
+    <div class="mf"><div class="ml">Date</div><input class="mi" id="ed" type="date"></div>
+    <div class="mf"><div class="ml">Category</div><div class="cat-grid" id="ext-cg"></div></div>
+    <div class="mf"><div class="ml">Note (optional)</div><input class="mi" id="eno" placeholder="Any memo…"></div>
+    <div class="macts"><button class="btn-cancel" onclick="closeExpModal()">Cancel</button><button class="btn-save" onclick="saveExp()">Save ✨</button></div>
+  </div>
+</div>
+
+<!-- SAVINGS MODAL -->
+<div class="overlay" id="sav-ov">
+  <div class="modal">
+    <div class="modal-ttl">New Savings Goal</div>
+    <div class="mf"><div class="ml">Goal Name</div><input class="mi" id="gn" placeholder="e.g. Emergency Fund"></div>
+    <div class="mf"><div class="ml">Target Amount</div><input class="mi" id="gt" type="number" inputmode="decimal" placeholder="50000"></div>
+    <div class="mf"><div class="ml">Already Saved</div><input class="mi" id="gs" type="number" inputmode="decimal" placeholder="0"></div>
+    <div class="macts"><button class="btn-cancel" onclick="closeSavModal()">Cancel</button><button class="btn-save" onclick="saveSav()">Create 🎯</button></div>
+  </div>
+</div>
+
+<script>
+const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+const CATS=[
+  {i:'🏠',l:'Housing'},{i:'🛒',l:'Food'},{i:'🚗',l:'Transport'},{i:'💊',l:'Health'},
+  {i:'📱',l:'Bills'},{i:'👗',l:'Shopping'},{i:'🎉',l:'Fun'},{i:'📚',l:'Education'},
+  {i:'💅',l:'Self-care'},{i:'✈️',l:'Travel'},{i:'🐾',l:'Pets'},{i:'🎁',l:'Gifts'}
+];
+const TH=[
+  {id:'pink',n:'Soft Pink',e:'🌸',bg:'linear-gradient(135deg,#ffd6e7,#f48fb1)',g:'her'},
+  {id:'lavender',n:'Lavender Dream',e:'💜',bg:'linear-gradient(135deg,#e8d8ff,#b39ddb)',g:'her'},
+  {id:'peach',n:'Peach & Cream',e:'🍑',bg:'linear-gradient(135deg,#ffe8cc,#ffb74d)',g:'her'},
+  {id:'sage',n:'Sage & Mint',e:'🌿',bg:'linear-gradient(135deg,#d4edcc,#81c784)',g:'her'},
+  {id:'berry',n:'Dark Berry',e:'🫐',bg:'linear-gradient(135deg,#4a0035,#9c2771)',g:'her'},
+  {id:'midnight',n:'Midnight Dark',e:'🌑',bg:'linear-gradient(135deg,#0d1117,#1f3a5f)',g:'him'},
+  {id:'forest',n:'Forest Deep',e:'🌲',bg:'linear-gradient(135deg,#2c3623,#3a4f28)',g:'him'},
+  {id:'slate',n:'Slate & Orange',e:'🔥',bg:'linear-gradient(135deg,#252831,#3d2218)',g:'him'},
+  {id:'navy',n:'Navy & Gold',e:'⚓',bg:'linear-gradient(135deg,#0a0e1a,#1a1400)',g:'him'},
+  {id:'mono',n:'Monochrome',e:'⬛',bg:'linear-gradient(135deg,#555,#000)',g:'him'},
+];
+const TC={pink:'#f48fb1',lavender:'#b39ddb',peach:'#ffb74d',sage:'#81c784',berry:'#9c2771',midnight:'#388bfd',forest:'#86b350',slate:'#ff6f3c',navy:'#d4af37',mono:'#222'};
+const now=new Date();
+
+// DATA STRUCTURE:
+// S.recurring = [{name,amount,pocket,category,catIcon,note,endYear,endMonth(0-based)|null}]  — global, no month key
+// S.planned   = [{name,amount,date(YYYY-MM-DD),category,catIcon,note}]                        — global, filtered by month+pocket on render
+// S.data[key] = {extra:[], income:[], savings:[]}   key = "YYYY-MM-pN"  — per month+pocket
+let S={pocket:1,theme:'pink',currency:'₱',appName:'PocketPal 🌸',p1l:'1st–15th',p2l:'16th–30th',
+       month:now.getMonth(),year:now.getFullYear(),recurring:[],planned:[],data:{}};
+
+let selRecP_=1, selRecCat=null, selPlanCat=null, selExtCat=null;
+
+/* ─── DATA HELPERS ─── */
+// Key is per-month AND per-pocket so income is always isolated
+function dk(){ return `${S.year}-${String(S.month+1).padStart(2,'0')}-p${S.pocket}`; }
+function pd(){
+  const k=dk();
+  if(!S.data[k]) S.data[k]={extra:[],income:[],savings:[]};
+  return S.data[k];
+}
+function sv(){ try{localStorage.setItem('pp6',JSON.stringify(S));}catch(e){} }
+function fmt(n){ return S.currency+Number(n).toLocaleString('en-PH',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+
+/* ─── COMPUTED ─── */
+function getRecurring(){
+  return S.recurring.filter(r=>{
+    if(r.pocket!==S.pocket) return false;
+    if(r.endYear!=null){
+      if(S.year>r.endYear) return false;
+      if(S.year===r.endYear && S.month>r.endMonth) return false;
+    }
+    return true;
+  });
+}
+function getPlanned(){
+  return S.planned.filter(p=>{
+    if(!p.date) return false;
+    const d=new Date(p.date+'T00:00:00');
+    if(d.getFullYear()!==S.year||d.getMonth()!==S.month) return false;
+    const day=d.getDate();
+    return S.pocket===1?(day>=1&&day<=15):(day>=16);
+  });
+}
+function totIncome(){ return pd().income.reduce((s,e)=>s+Number(e.amount),0); }
+function totSpent(){
+  return getRecurring().reduce((s,e)=>s+Number(e.amount),0)
+        +getPlanned().reduce((s,e)=>s+Number(e.amount),0)
+        +pd().extra.reduce((s,e)=>s+Number(e.amount),0);
+}
+
+/* ─── INCOME BLOCK (in nav) ─── */
+function renderIncBlock(){
+  const inc=pd().income;
+  const total=totIncome();
+  document.getElementById('inc-block-lbl').textContent=`Income · Pocket ${S.pocket}`;
+  document.getElementById('inc-block-total').textContent=fmt(total);
+  const el=document.getElementById('inc-block-entries');
+  if(!inc.length){
+    el.innerHTML=`<div class="inc-block-empty">No income logged yet — tap + Add</div>`;
+    return;
+  }
+  el.innerHTML=inc.map((e,i)=>`
+    <div class="inc-block-entry">
+      <span class="inc-block-entry-lbl">${e.label}</span>
+      <span style="display:flex;align-items:center;gap:6px;">
+        <span class="inc-block-entry-amt">${fmt(e.amount)}</span>
+        <button class="inc-del" onclick="delInc(${i})">✕</button>
+      </span>
+    </div>`).join('');
+}
+
+/* ─── RENDER SUMMARY ─── */
+function renderSummary(){
+  const inc=totIncome(),spent=totSpent(),left=inc-spent;
+  const pct=inc>0?Math.min(100,Math.round(spent/inc*100)):0;
+  document.getElementById('s-inc').textContent=fmt(inc);
+  document.getElementById('s-spent').textContent=fmt(spent);
+  const le=document.getElementById('s-left');
+  le.textContent=fmt(left); le.className='sval '+(left<0?'red':'grn');
+  document.getElementById('pct-lbl').textContent=pct+'%';
+  document.getElementById('prog-bar').style.width=pct+'%';
+}
+
+/* ─── RENDER RECURRING ─── */
+function renderRecurring(){
+  const list=getRecurring(), el=document.getElementById('list-recurring');
+  if(!list.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon">🔄</div><div class="empty-text">No recurring expenses yet.<br>Add one and it shows every month automatically.</div></div>`;
+    return;
+  }
+  el.innerHTML=list.map(e=>{
+    const idx=S.recurring.indexOf(e);
+    const endStr=e.endYear!=null?`ends ${MONTHS[e.endMonth]} ${e.endYear}`:'forever';
+    return `<div class="exp-item">
+      <div class="exp-ic">${e.catIcon||'💸'}</div>
+      <div class="exp-meta">
+        <div class="exp-nm">${e.name}</div>
+        <div class="exp-sb">${e.category||'Uncategorized'} · ${endStr}</div>
+        ${e.note?`<div class="exp-nt">${e.note}</div>`:''}
+      </div>
+      <div class="exp-rgt"><div class="exp-am">${fmt(e.amount)}</div><span class="exp-bg auto">auto</span></div>
+      <button class="del-btn" onclick="delRec(${idx})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+/* ─── RENDER PLANNED ─── */
+function renderPlanned(){
+  const list=getPlanned(), el=document.getElementById('list-planned');
+  if(!list.length){
+    el.innerHTML=`<div class="empty"><div class="empty-icon">📅</div><div class="empty-text">No planned expenses for this pocket period.<br>Add one with a due date and it routes here automatically.</div></div>`;
+    return;
+  }
+  el.innerHTML=list.map(e=>{
+    const idx=S.planned.indexOf(e);
+    const d=new Date(e.date+'T00:00:00');
+    const dateStr=d.toLocaleDateString('en-PH',{month:'short',day:'numeric'});
+    return `<div class="exp-item">
+      <div class="exp-ic">${e.catIcon||'💸'}</div>
+      <div class="exp-meta">
+        <div class="exp-nm">${e.name}</div>
+        <div class="exp-sb">${e.category||'Uncategorized'} · due ${dateStr}</div>
+        ${e.note?`<div class="exp-nt">${e.note}</div>`:''}
+      </div>
+      <div class="exp-rgt"><div class="exp-am">${fmt(e.amount)}</div><span class="exp-bg">planned</span></div>
+      <button class="del-btn" onclick="delPlan(${idx})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+/* ─── RENDER EXTRA ─── */
+function renderExtra(){
+  const list=pd().extra, el=document.getElementById('list-extra');
+  if(!list.length){ el.innerHTML=`<div class="empty"><div class="empty-icon">✏️</div><div class="empty-text">No extra expenses logged yet</div></div>`; return; }
+  el.innerHTML=list.map((e,i)=>`
+    <div class="exp-item">
+      <div class="exp-ic">${e.catIcon||'💸'}</div>
+      <div class="exp-meta">
+        <div class="exp-nm">${e.name}</div>
+        <div class="exp-sb">${e.category||'Uncategorized'}${e.date?' · '+e.date:''}</div>
+        ${e.note?`<div class="exp-nt">${e.note}</div>`:''}
+      </div>
+      <div class="exp-rgt"><div class="exp-am">${fmt(e.amount)}</div><span class="exp-bg">extra</span></div>
+      <button class="del-btn" onclick="delExtra(${i})">✕</button>
+    </div>`).join('');
+}
+
+/* ─── RENDER SAVINGS ─── */
+function renderSavings(){
+  const goals=pd().savings, el=document.getElementById('sav-list');
+  el.innerHTML=goals.length?goals.map((g,i)=>{
+    const pct=g.target>0?Math.min(100,Math.round(g.saved/g.target*100)):0;
+    return `<div class="exp-item" style="padding:12px 0;align-items:flex-start;">
+      <div class="exp-ic sav">🎯</div>
+      <div class="exp-meta">
+        <div class="exp-nm sav">${g.name}</div>
+        <div class="sav-mini-bar"><div class="sav-mini-fill" style="width:${pct}%"></div></div>
+        <div class="exp-sb sav">${fmt(g.saved)} of ${fmt(g.target)} · ${pct}%</div>
+        <div style="display:flex;gap:6px;margin-top:7px;">
+          <input style="flex:1;border:1px solid var(--bd);background:var(--sf2);color:var(--tx);border-radius:8px;padding:6px 10px;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;" id="sc-${i}" type="number" inputmode="decimal" placeholder="Add amount…">
+          <button style="background:#1D9E75;color:#fff;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;" onclick="addContrib(${i})">+ Add</button>
+        </div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <span class="exp-bg sav">${pct}%</span>
+        <div style="margin-top:6px;"><button class="del-btn" onclick="delSav(${i})">✕</button></div>
+      </div>
+    </div>`;
+  }).join(''):'<div class="empty"><div class="empty-icon">🎯</div><div class="empty-text">No savings goals yet</div></div>';
+}
+
+/* ─── RENDER DASHBOARD ─── */
+function renderDashboard(){
+  const inc=totIncome(),spent=totSpent(),left=inc-spent;
+  const rec=getRecurring(),plan=getPlanned(),extra=pd().extra;
+  const all=[...rec.map(e=>({...e,_t:'recurring'})),...plan.map(e=>({...e,_t:'planned'})),...extra.map(e=>({...e,_t:'extra'}))];
+  document.getElementById('d-spent').textContent=fmt(spent);
+  document.getElementById('d-spent-sub').textContent=all.length+' expenses';
+  document.getElementById('d-left').textContent=fmt(left);
+  document.getElementById('d-left-sub').textContent='of '+fmt(inc)+' income';
+  document.getElementById('d-rec').textContent=fmt(rec.reduce((s,e)=>s+Number(e.amount),0));
+  document.getElementById('d-rec-sub').textContent=rec.length+' items';
+  const plx=plan.reduce((s,e)=>s+Number(e.amount),0)+extra.reduce((s,e)=>s+Number(e.amount),0);
+  document.getElementById('d-plex').textContent=fmt(plx);
+  document.getElementById('d-plex-sub').textContent=(plan.length+extra.length)+' items';
+  const catMap={};
+  all.forEach(e=>{ const k=e.category||'Other'; if(!catMap[k]) catMap[k]={ic:e.catIcon||'💸',tot:0}; catMap[k].tot+=Number(e.amount); });
+  const cats=Object.entries(catMap).sort((a,b)=>b[1].tot-a[1].tot);
+  const mx=cats.length?cats[0][1].tot:1;
+  document.getElementById('cat-chart').innerHTML=cats.length?cats.map(([nm,d])=>`
+    <div class="cat-row">
+      <div class="cat-ico">${d.ic}</div>
+      <div class="cat-inf"><div class="cat-nm">${nm}</div><div class="cat-tr"><div class="cat-fl" style="width:${Math.round(d.tot/mx*100)}%"></div></div></div>
+      <div class="cat-am">${fmt(d.tot)}</div>
+    </div>`).join(''):'<div style="font-size:12px;color:var(--tx3);">No expenses yet</div>';
+  document.getElementById('dash-list').innerHTML=all.length?all.map(e=>`
+    <div class="exp-item">
+      <div class="exp-ic">${e.catIcon||'💸'}</div>
+      <div class="exp-meta">
+        <div class="exp-nm">${e.name}</div>
+        <div class="exp-sb">${e.category||'Uncategorized'}${e.date?' · '+e.date:''}</div>
+        ${e.note?`<div class="exp-nt">${e.note}</div>`:''}
+      </div>
+      <div class="exp-rgt"><div class="exp-am">${fmt(e.amount)}</div><span class="exp-bg ${e._t==='recurring'?'auto':''}">${e._t}</span></div>
+    </div>`).join(''):'<div class="empty"><div class="empty-icon">📋</div><div class="empty-text">No expenses this pocket yet</div></div>';
+}
+
+/* ─── RENDER POCKETS ─── */
+function renderPockets(){
+  document.getElementById('p1btn').className='pbtn'+(S.pocket===1?' active':'');
+  document.getElementById('p2btn').className='pbtn'+(S.pocket===2?' active':'');
+  document.getElementById('p1btn').textContent='Pocket 1 · '+S.p1l;
+  document.getElementById('p2btn').textContent='Pocket 2 · '+S.p2l;
+}
+
+function renderAll(){
+  renderPockets(); renderIncBlock(); renderSummary();
+  renderDashboard(); renderRecurring(); renderPlanned();
+  renderExtra(); renderSavings();
+  document.getElementById('app-title').textContent=S.appName;
+}
+
+/* ─── SWITCH ─── */
+function switchPocket(n){ S.pocket=n; sv(); renderAll(); }
+function switchTab(name){
+  const ns=['dashboard','recurring','planned','extra','savings','settings'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.className='tab'+(ns[i]===name?' active':''));
+  document.querySelectorAll('.tab-pane').forEach(c=>c.className='tab-pane');
+  document.getElementById('tab-'+name).className='tab-pane active';
+  const noFab=['savings','settings'];
+  document.getElementById('fab').style.display=noFab.includes(name)?'none':'flex';
+  if(name==='settings') buildThemeGrids();
+}
+function fabAction(){
+  const ns=['dashboard','recurring','planned','extra','savings','settings'];
+  const idx=[...document.querySelectorAll('.tab')].findIndex(t=>t.classList.contains('active'));
+  const t=ns[idx];
+  if(t==='recurring') openRecModal();
+  else if(t==='planned') openPlanModal();
+  else openExpModal();
+}
+function onMonthChange(){
+  S.month=parseInt(document.getElementById('msel').value);
+  S.year=parseInt(document.getElementById('ysel').value);
+  sv(); renderAll();
+}
+
+/* ─── INCOME ─── */
+// Income is stored inside S.data[dk()] — meaning it is bound to BOTH month AND pocket.
+// Changing month OR pocket shows a completely different income set. Data never disappears.
+function openIncModal(){
+  document.getElementById('il').value=''; document.getElementById('ia').value='';
+  document.getElementById('inc-ov').className='overlay open';
+}
+function closeIncModal(){ document.getElementById('inc-ov').className='overlay'; }
+function saveInc(){
+  const label=document.getElementById('il').value.trim(), amount=parseFloat(document.getElementById('ia').value);
+  if(!label||!amount){ showToast('Fill in label & amount 💕'); return; }
+  pd().income.push({label,amount});
+  sv(); renderAll(); closeIncModal(); showToast('Income added! 💸');
+}
+function delInc(i){ pd().income.splice(i,1); sv(); renderAll(); }
+
+/* ─── RECURRING ─── */
+function selRecP(n){
+  selRecP_=n;
+  document.getElementById('rec-p1').className='pr-btn'+(n===1?' sel':'');
+  document.getElementById('rec-p2').className='pr-btn'+(n===2?' sel':'');
+}
+function openRecModal(){
+  selRecCat=null; selRecP_=S.pocket;
+  ['rn','ra','rno','rend'].forEach(id=>document.getElementById(id).value='');
+  selRecP(S.pocket);
+  document.getElementById('rec-cg').innerHTML=CATS.map(c=>`<div class="cb" onclick="pickRC(this,'${c.i}','${c.l}')">${c.i}<br>${c.l}</div>`).join('');
+  document.getElementById('rec-ov').className='overlay open';
+}
+function pickRC(el,ic,lb){ document.querySelectorAll('#rec-cg .cb').forEach(b=>b.className='cb'); el.className='cb sel'; selRecCat={ic,lb}; }
+function closeRecModal(){ document.getElementById('rec-ov').className='overlay'; }
+function saveRec(){
+  const name=document.getElementById('rn').value.trim(), amount=parseFloat(document.getElementById('ra').value);
+  if(!name||!amount){ showToast('Fill in name & amount 💕'); return; }
+  const ev=document.getElementById('rend').value;
+  let endYear=null,endMonth=null;
+  if(ev){ const p=ev.split('-'); endYear=parseInt(p[0]); endMonth=parseInt(p[1])-1; }
+  S.recurring.push({name,amount,pocket:selRecP_,category:selRecCat?selRecCat.lb:'Uncategorized',catIcon:selRecCat?selRecCat.ic:'💸',note:document.getElementById('rno').value.trim(),endYear,endMonth});
+  sv(); renderAll(); closeRecModal(); showToast('Recurring added! 🔄');
+}
+function delRec(i){ S.recurring.splice(i,1); sv(); renderAll(); }
+
+/* ─── PLANNED ─── */
+function openPlanModal(){
+  selPlanCat=null;
+  ['pln','pla','plno'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('pld').value=`${S.year}-${String(S.month+1).padStart(2,'0')}-01`;
+  document.getElementById('plan-cg').innerHTML=CATS.map(c=>`<div class="cb" onclick="pickPC(this,'${c.i}','${c.l}')">${c.i}<br>${c.l}</div>`).join('');
+  document.getElementById('plan-ov').className='overlay open';
+}
+function pickPC(el,ic,lb){ document.querySelectorAll('#plan-cg .cb').forEach(b=>b.className='cb'); el.className='cb sel'; selPlanCat={ic,lb}; }
+function closePlanModal(){ document.getElementById('plan-ov').className='overlay'; }
+function savePlan(){
+  const name=document.getElementById('pln').value.trim(), amount=parseFloat(document.getElementById('pla').value), date=document.getElementById('pld').value;
+  if(!name||!amount||!date){ showToast('Fill in name, amount & date 💕'); return; }
+  S.planned.push({name,amount,date,category:selPlanCat?selPlanCat.lb:'Uncategorized',catIcon:selPlanCat?selPlanCat.ic:'💸',note:document.getElementById('plno').value.trim()});
+  sv(); renderAll(); closePlanModal(); showToast('Planned expense saved! 📅');
+}
+function delPlan(i){ S.planned.splice(i,1); sv(); renderAll(); }
+
+/* ─── EXTRA ─── */
+function openExpModal(){
+  selExtCat=null;
+  ['en','ea','eno'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ed').value=now.toISOString().split('T')[0];
+  document.getElementById('ext-cg').innerHTML=CATS.map(c=>`<div class="cb" onclick="pickEC(this,'${c.i}','${c.l}')">${c.i}<br>${c.l}</div>`).join('');
+  document.getElementById('exp-ov').className='overlay open';
+}
+function pickEC(el,ic,lb){ document.querySelectorAll('#ext-cg .cb').forEach(b=>b.className='cb'); el.className='cb sel'; selExtCat={ic,lb}; }
+function closeExpModal(){ document.getElementById('exp-ov').className='overlay'; }
+function saveExp(){
+  const name=document.getElementById('en').value.trim(), amount=parseFloat(document.getElementById('ea').value);
+  if(!name||!amount){ showToast('Fill in name & amount 💕'); return; }
+  pd().extra.push({name,amount,date:document.getElementById('ed').value,category:selExtCat?selExtCat.lb:'Uncategorized',catIcon:selExtCat?selExtCat.ic:'💸',note:document.getElementById('eno').value.trim()});
+  sv(); renderAll(); closeExpModal(); showToast('Logged! ✨');
+}
+function delExtra(i){ pd().extra.splice(i,1); sv(); renderAll(); }
+
+/* ─── SAVINGS ─── */
+function openSavModal(){ ['gn','gt','gs'].forEach(id=>document.getElementById(id).value=''); document.getElementById('sav-ov').className='overlay open'; }
+function closeSavModal(){ document.getElementById('sav-ov').className='overlay'; }
+function saveSav(){
+  const name=document.getElementById('gn').value.trim(), target=parseFloat(document.getElementById('gt').value), saved=parseFloat(document.getElementById('gs').value)||0;
+  if(!name||!target){ showToast('Fill in all fields 💕'); return; }
+  pd().savings.push({name,target,saved}); sv(); renderAll(); closeSavModal(); showToast('Goal created! 🎯');
+}
+function addContrib(i){ const v=parseFloat(document.getElementById('sc-'+i).value); if(!v||isNaN(v)) return; pd().savings[i].saved+=v; sv(); renderAll(); showToast('Savings updated! 🌸'); }
+function delSav(i){ pd().savings.splice(i,1); sv(); renderAll(); }
+
+/* ─── SETTINGS ─── */
+function buildThemeGrids(){
+  ['her','him'].forEach(g=>{
+    document.getElementById('tg-'+g).innerHTML=TH.filter(t=>t.g===g).map(t=>`
+      <div class="topt${S.theme===t.id?' active':''}" id="topt-${t.id}" onclick="setTheme('${t.id}')">
+        <div class="tthumb" style="background:${t.bg}">${t.e}</div>
+        <div class="tname">${t.n}</div>
+      </div>`).join('');
+  });
+}
+function setTheme(t){
+  S.theme=t; document.body.className='theme-'+t;
+  document.getElementById('tcm').setAttribute('content',TC[t]||'#f48fb1');
+  document.querySelectorAll('.topt').forEach(e=>e.className='topt');
+  const el=document.getElementById('topt-'+t); if(el) el.className='topt active';
+  sv();
+}
+function savePref(){
+  S.currency=document.getElementById('cur-in').value||'₱';
+  S.appName=document.getElementById('anm-in').value||'PocketPal';
+  S.p1l=document.getElementById('p1l-in').value||'1st–15th';
+  S.p2l=document.getElementById('p2l-in').value||'16th–30th';
+  sv(); renderAll();
+}
+
+/* ─── MONTH SELECTORS ─── */
+function buildMonthSel(){
+  document.getElementById('msel').innerHTML=MONTHS.map((m,i)=>`<option value="${i}"${i===S.month?' selected':''}>${m}</option>`).join('');
+  let y=''; for(let yr=S.year-3;yr<=S.year+3;yr++) y+=`<option value="${yr}"${yr===S.year?' selected':''}>${yr}</option>`;
+  document.getElementById('ysel').innerHTML=y;
+}
+
+/* ─── TOAST ─── */
+function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'; setTimeout(()=>t.className='toast',2200); }
+
+/* ─── LOAD ─── */
+function load(){
+  const d=localStorage.getItem('pp6');
+  if(d){ try{ const p=JSON.parse(d); S={...S,...p}; }catch(e){} }
+  if(!Array.isArray(S.recurring)) S.recurring=[];
+  if(!Array.isArray(S.planned)) S.planned=[];
+  if(!S.data||typeof S.data!=='object') S.data={};
+  S.currency=S.currency||'₱'; S.appName=S.appName||'PocketPal 🌸';
+  S.p1l=S.p1l||'1st–15th'; S.p2l=S.p2l||'16th–30th';
+  if(S.month===undefined){S.month=now.getMonth();S.year=now.getFullYear();}
+  document.body.className='theme-'+S.theme;
+  document.getElementById('tcm').setAttribute('content',TC[S.theme]||'#f48fb1');
+  document.getElementById('cur-in').value=S.currency;
+  document.getElementById('anm-in').value=S.appName;
+  document.getElementById('p1l-in').value=S.p1l;
+  document.getElementById('p2l-in').value=S.p2l;
+  buildMonthSel(); buildThemeGrids(); renderAll();
+}
+
+load();
+</script>
+</body>
+</html>
